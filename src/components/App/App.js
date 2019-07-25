@@ -11,14 +11,8 @@ export default class App extends Component {
 
     state = {
         showRandomPlanet: true,
-        selectedPerson: 6
+        selectedPerson: 1
     };
-
-    // toggleRandomPlanet = () => {
-    //     return this.setState({
-
-    //     })
-    // }
 
     onPersonSelected = (id) => {
         this.setState({
@@ -35,7 +29,7 @@ export default class App extends Component {
                 <RandomPlanet />
                 <div className='row mb2'>
                     <div className='col-md-6'>
-                        <ItemList onItemSelected={this.onPersonSelected} />
+                        <ItemList onPersonSelected={this.onPersonSelected} />
                     </div>
                     <div className='col-md-6'>
                         <PersonDetails personId={this.state.selectedPerson} />

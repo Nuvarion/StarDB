@@ -2,6 +2,7 @@ import React, {Component } from 'react';
 
 import Spinner from '../Spinner';
 import SwapiService from '../../services/Swapi-services';
+import PersonDetails from '../Person-details';
 
 import './Item-list.css';
 
@@ -27,10 +28,10 @@ export default class ItemList extends Component {
         return arr.map(({id, name}) => {
             return (
                 <li 
-                className='list-group-item'
-                key={id} 
-                onClick={() => this.props.onItemSelected(id)}>
-                {name}
+                    className='list-group-item'
+                    key={id} 
+                    onClick={() => this.props.onPersonSelected(id)}>
+                    {name}
             </li>
             )
         });
