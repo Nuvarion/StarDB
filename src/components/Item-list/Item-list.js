@@ -2,7 +2,6 @@ import React, {Component } from 'react';
 
 import Spinner from '../Spinner';
 import SwapiService from '../../services/Swapi-services';
-import PersonDetails from '../Person-details';
 
 import './Item-list.css';
 

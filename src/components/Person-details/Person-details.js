@@ -57,11 +57,13 @@ export default class PersonDetails extends Component {
         }
 
         const hasData = !(loading || error)
+        const errorMessage = error ? <ErrorIndicator /> : null;
         const spinner = loading ? <Spinner /> : null;
         const content = hasData ? <PersonView person={person}/> : null;
 
         return (
             <div className='person-details card'>
+                {errorMessage}
                 {spinner}
                 {content}
             </div>
@@ -69,13 +71,13 @@ export default class PersonDetails extends Component {
     };
 };
 
-const PersonView = ( {person} ) => {
+const PersonView = ( { person } ) => {
 
     const { id, name, gender, birthYear, eyeColor } = person;
 
     return (
         <React.Fragment>
-            <img className='person-image'
+            <img className='person-image' alt='person'
                 src={`https://starwars-visualguide.com/assets/img/characters/${id}.jpg`} />
 
             <div className='card-body'>
