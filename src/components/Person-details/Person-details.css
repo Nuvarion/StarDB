@@ -5,7 +5,11 @@
   }
 
 .decrPerson {
-  padding-left: 2rem;
+  padding-left: 1rem;
+}
+
+.decrPerson .list-group {
+  margin: 0.5rem 0 0 1rem;
 }
 
 .person-details .person-image {
@@ -20,6 +24,7 @@
 
 .person-details .list-group-item .term{
   margin-right: .5rem;
+  color: #c78f22;
 }
 
 @media (max-width: 767px) {
