@@ -26,6 +26,7 @@ const PersonView = ( { person } ) => {
                         <span className='term'>Eye Color: </span>
                         <span>{eyeColor}</span>
                     </li>
+    
                 </ul>
             </div>
         </React.Fragment>

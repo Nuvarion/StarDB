@@ -5,9 +5,9 @@ import Spinner from '../Spinner';
 import ErrorIndicator from '../Error-indicator';
 import PersonView from '../Person-view';
 
-import './Person-details.css';
+import './Item-details.css';
 
-export default class PersonDetails extends Component {
+export default class ItemDetails extends Component {
 
     swapiService = new SwapiService();
   
@@ -59,7 +59,7 @@ export default class PersonDetails extends Component {
       const content = hasData ? <PersonView person={ person } /> : null;
   
       return (
-        <div className="person-details card">
+        <div className="item-details card">
           {errorMessage}
           {spinner}
           {content}
