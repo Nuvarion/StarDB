@@ -1,56 +1,61 @@
-import React, {Component } from 'react';
 
+import React, { Component } from 'react';
+
+// import SwapiService from '../../services/Swapi-services';
 import Spinner from '../Spinner';
-import SwapiService from '../../services/Swapi-services';
 
 import './Item-list.css';
 
 export default class ItemList extends Component {
 
-    swapiService = new SwapiService();
-
     state = {
-        people: null
+      itemList: null
     };
-
+  
     componentDidMount() {
-        this.swapiService
-            .getAllPeople()
-            .then((peopleList) => {
-                this.setState({
-                    peopleList
-                });
-            });
-    };
-
-    renderItems(arr) {
-        return arr.map(({id, name}) => {
-            return (
-                <li 
-                    className='list-group-item'
-                    key={id} 
-                    onClick={() => this.props.onPersonSelected(id)}>
-                    {name}
-            </li>
-            )
+  
+      const { getData } = this.props;
+  
+      getData()
+        .then((itemList) => {
+          this.setState({
+            itemList
+          });
         });
-    };
+    }
+  
+    renderItems(arr) {
 
-    render() {
-
-        const { peopleList } = this.state;
-
-        if (!peopleList) {
-            return <Spinner />;
-        }
-
-        const items = this.renderItems(peopleList);
-
+      return arr.map((item) => {
+        
+        const { id } = item;
+        const label = this.props.children(item);
+  
         return (
-            <ul className='item-list list-group'>
-                {items}
-            </ul>
+          <li className="list-group-item"
+              key={id}
+              onClick={() => this.props.onItemSelected(id)}>
+            {label}
+          </li>
         );
-    };
-};
-
+      });
+    }
+  
+    render() {
+  
+      const { itemList } = this.state;
+  
+      if (!itemList) {
+        return <Spinner />;
+      }
+  
+      const items = this.renderItems(itemList);
+  
+      return (
+        <ul className="item-list list-group">
+          {items}
+        </ul>
+      );
+    }
+  }
+  
