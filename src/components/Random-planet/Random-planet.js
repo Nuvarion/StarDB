@@ -65,10 +65,4 @@ export default class RandomPlanet extends Component {
         </div>
       );
     }
-<<<<<<< HEAD
-}
-
-
-=======
   }
->>>>>>> dev
