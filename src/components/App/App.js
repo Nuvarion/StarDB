@@ -10,7 +10,6 @@ import { PeoplePage, PlanetPage, StarshipPage }   from '../Pages';
 
 import './App.css';
 
-
 export default class App extends Component {
 
     state = {
