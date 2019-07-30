@@ -4,21 +4,22 @@ import ItemDetails from '../Item-details';
 import Record from '../Record';
 import { withSwapiService } from '../Hoc-helpers';
 
-const PersonDetails = ({ itemId, swapiService }) => {
+const PersonDetails = (props) => {
    
-    const { getPerson, getPersonImage } = swapiService;
-
     return (
-        <ItemDetails 
-            itemId={itemId} 
-            getData={ getPerson }
-            getImageUrl={ getPersonImage }>
+        <ItemDetails {...props}>
             <Record field='gender' label='Gender' />
             <Record field='eyeColor' label='Eye Color' />
         </ItemDetails>
     );
 };
 
+const mapMethodsToProps = (swapiService) => {
+    return {
+        getData: swapiService.getPerson,
+        getImageUrl: swapiService.getPersonImage
+    }
+};
 
 
-export default withSwapiService(PersonDetails);
+export default withSwapiService(PersonDetails, mapMethodsToProps);
