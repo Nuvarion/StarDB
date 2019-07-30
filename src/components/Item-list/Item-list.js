@@ -4,57 +4,59 @@ import Spinner from '../Spinner';
 
 import './Item-list.css';
 
-export default class ItemList extends Component {
+const ItemList = (props) => {
+  
+      const { data, onItemSelected, children: renderLabel } = props;
+  
+      
+      const items = data.map((item) => {
+      
+        const { id } = item;
+        const label = renderLabel(item);
+  
+        return (
+          <li className="list-group-item"
+              key={id}
+              onClick={() => onItemSelected(id)}>
+            {label}
+          </li>
+        );
+      });
+      return (
+        <ul className="item-list list-group">
+          {items}
+        </ul>
+      );
+    }
 
+const withData = (View, getData) => {
+  return class extends Component {
     state = {
-        itemList: null
+      data: null
     };
-
+  
     componentDidMount() {
-
-        const { getData } = this.props;
-
-        getData()
-            .then((itemList) => {
-                this.setState({
-                    itemList
-                });
-            });
-    };
-
-    renderItems(arr) {
-        return arr.map((item) => {
-
-            const { id } = item;
-
-            const label = this.props.renderItems(item);
-             
-            return (
-                <li 
-                    className='list-group-item'
-                    key={id} 
-                    onClick={() => this.props.onPersonSelected(id)}>
-                    {label}
-            </li>
-            )
+  
+      getData()
+        .then((data) => {
+          this.setState({
+            data
+          });
         });
-    };
-
+    }
+    
     render() {
 
-        const { itemList } = this.state;
+      const { data } = this.state;
+  
+      if (!data) {
+        return <Spinner />;
+      }
+  
+      return <View { ...this.props } data={ data } />
+    }
+  }
+}
 
-        if (!itemList) {
-            return <Spinner />;
-        }
-
-        const items = this.renderItems(itemList);
-
-        return (
-            <ul className='item-list list-group'>
-                {items}
-            </ul>
-        );
-    };
-};
+export default ItemList;
 

@@ -9,64 +9,66 @@ import './Random-planet.css';
 
 export default class RandomPlanet extends Component {
 
-    swapiService = new SwapiService(); 
-
+    swapiService = new SwapiService();
+  
     state = {
-        planet: null,
-        loading: true
+      planet: {},
+      loading: true
     };
-
+  
     componentDidMount() {
-        this.updatePlanet();
-        this.interval = setInterval(this.updatePlanet, 5000);
-    };
-
-    componentWillUnmount() {
-        clearInterval(this.interval);
+      this.updatePlanet();
+      this.interval = setInterval(this.updatePlanet, 10000);
     }
-
+  
+    componentWillUnmount() {
+      clearInterval(this.interval);
+    }
+  
     onPlanetLoaded = (planet) => {
-        this.setState({
-            planet,
-            loading: false,
-            error: false
-        });
+      this.setState({
+        planet,
+        loading: false,
+        error: false
+      });
     };
-
+  
     onError = (err) => {
-        this.setState({
-            error: true,
-            loading: false
-        });
+      this.setState({
+        error: true,
+        loading: false
+      });
     };
-
+  
     updatePlanet = () => {
-
-        const id = Math.floor(Math.random()*25 + 3);
-        // const id = 2309581
-        this.swapiService
+      const id = Math.floor(Math.random()*17) + 2;
+      this.swapiService
         .getPlanet(id)
         .then(this.onPlanetLoaded)
-        .catch(this.onError)
-        };
-
+        .catch(this.onError);
+    };
+  
     render() {
-        const { planet, loading, error } = this.state;
+      const { planet, loading, error } = this.state;
+  
+      const hasData = !(loading || error);
+  
+      const errorMessage = error ? <ErrorIndicator/> : null;
+      const spinner = loading ? <Spinner /> : null;
+      const content = hasData ? <PlanetView planet={ planet } /> : null;
 
-        const hasData = !(loading || error);
-
-        const errorMessage = error ? <ErrorIndicator /> : null;
-        const spinner = loading ? <Spinner /> : null;
-        const content = hasData ? <PlanetView planet={ planet } /> : null;
-
-        return (
-            <div className='d-flex random-planet jumbotron rounded'>
-                { errorMessage }
-                { spinner }
-                { content }
-            </div>
-        );
+      return (
+        <div className="random-planet jumbotron rounded">
+          {errorMessage}
+          {spinner}
+          {content}
+        </div>
+      );
     }
+<<<<<<< HEAD
 }
 
 
+=======
+  }
+>>>>>>> dev
