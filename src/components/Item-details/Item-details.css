@@ -20,6 +20,14 @@
 
   @media (max-width: 767px) {
     .item-details {
-      margin-top: 5%;
+      margin-top: 20px;
     }
+  }
+
+  .img {
+    width: 30%;
+  }
+
+  .item-image {
+    width: 100%
   }

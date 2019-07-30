@@ -3,7 +3,7 @@ import React, {Component} from 'react';
 import SwapiService from '../../services/Swapi-services';
 import Spinner from '../Spinner';
 import ErrorIndicator from '../Error-indicator';
-import PersonView from '../Person-view';
+// import ItemView from '../Item-view';
 
 import './Item-details.css';
 
@@ -12,51 +12,76 @@ export default class ItemDetails extends Component {
     swapiService = new SwapiService();
   
     state = {
-      person: null,
+      image: null,
+      item: null,
       loading: false,
       error: false
     };
   
     componentDidMount() {
-      this.updatePerson();
-    }
+      this.updateItem();
+    };
   
     componentDidUpdate(prevProps) {
-      if (this.props.personId !== prevProps.personId) {
-        this.updatePerson();
+      if (this.props.itemId !== prevProps.itemId) {
+        this.updateItem();
       }
-    }
+    };
   
-    updatePerson() {
-      const { personId } = this.props;
-      if (!personId) {
+    updateItem() {
+      const { itemId, getData, getImageUrl } = this.props;
+      if (!itemId) {
         return;
       }
 
-      this.setState({loading: true, error: false})
+      this.setState({ loading: true, error: false })
   
-      this.swapiService
-        .getPerson(personId)
-        .then((person) => {
-          this.setState({ person, loading: false });
+      getData(itemId)
+        .then((item) => {
+          this.setState({ 
+            item, 
+            loading: false,
+            image: getImageUrl(item)});
         })
         .catch(() => {
-          this.setState({ error: true, loading: false})
-        })
-
-    }
+          this.setState({ error: true, loading: false })
+        });
+    };
   
     render() {
   
-      const { loading, error, person } = this.state;
-      if (!person) {
+      const { loading, error, image, item } = this.state;
+
+      if (!item) {
         return <Spinner />
       }
+      
+      const { name } = item;
+
+      const itemView = (
+        <React.Fragment>
+          <div className='img'>
+                <img className='item-image' alt='item'
+                    src={ image } />
+            </div>
+            
+            <div className='card-body'>
+                <h4>{ name }</h4>
+                <ul className='list-group list-group-flush'>
+                    { 
+                        React.Children.map(this.props.children, (child) => {
+                            return React.cloneElement(child, { item });
+                        })
+                     }
+                </ul>
+            </div>
+        </React.Fragment>
+      );
 
       const hasData = !(loading || error);
       const errorMessage = error ? <ErrorIndicator /> : null;
       const spinner = loading ? <Spinner /> : null;
-      const content = hasData ? <PersonView person={ person } /> : null;
+      const content = hasData ? itemView : null;            
   
       return (
         <div className="item-details card">
