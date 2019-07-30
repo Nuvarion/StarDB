@@ -1,11 +1,9 @@
 
 import React, { Component } from 'react';
 
-// import SwapiService from '../../services/Swapi-services';
 import Spinner from '../Spinner';
 
 import './Item-list.css';
-import SwapiService from '../../services/Swapi-services';
 
 const ItemList = (props) => {
   
@@ -61,6 +59,5 @@ const withData = (View, getData) => {
   }
 }
 
-const { getAllPeople } = new SwapiService();
+export default ItemList;
 
-export default withData(ItemList, getAllPeople);
